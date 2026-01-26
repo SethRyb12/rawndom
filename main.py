@@ -42,6 +42,17 @@ MESSAGES = [
     "The most expensive part of a project is the part you built too soon.",
 ]
 
+def build_parser():
+    p = argparse.ArgumentParser(
+        prog="rawndom",
+        description="Print one or more random inspirational messages",
+    )
+    p.add_argument("-n", "--count", type=int, default=1, help="number of messages to print")
+    p.add_argument("-s", "--seed", type=int, default=None, help="optional RNG seed for reproducible output")
+    p.add_argument("--json", action="store_true", help="output messages as a JSON array")
+    p.add_argument("--list", action="store_true", help="print all available messages and exit")
+    return p
+
 def main(argv=None):
     argv = argv if argv is not None else sys.argv[1:]
     parser = build_parser()

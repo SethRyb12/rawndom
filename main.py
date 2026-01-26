@@ -30,6 +30,16 @@ MESSAGES = [
     "Hardcoded values are debts you'll pay back with interest.",
     "The best code is the code you didn't have to write.",
     "Done is better than perfect.",
+    "Release often; feedback is the only real compass.",
+    "Your code is a conversation with the next person who reads it.",
+    "Strive for simplicity; complexity is easy, clarity is hard.",
+    "Version control is your time machine; use it often.",
+    "Sleep on it; the subconscious is a great debugger.",
+    "Every 'error' is just data in disguise.",
+    "Stay curious; the tech moves fast, but fundamentals are forever.",
+    "Documentation is a love letter to your future self.",
+    "Break the problem down until the pieces are boring.",
+    "The most expensive part of a project is the part you built too soon.",
 ]
 
 def main():

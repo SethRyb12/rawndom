@@ -42,6 +42,11 @@ MESSAGES = [
     "The most expensive part of a project is the part you built too soon.",
 ]
 
+def get_messages(count=1, seed=None):
+    if seed is not None:
+        random.seed(seed)
+    return [random.choice(MESSAGES) for _ in range(count)]
+
 def build_parser():
     p = argparse.ArgumentParser(
         prog="rawndom",

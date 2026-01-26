@@ -8,7 +8,5 @@ Run:
 python main.py
 ```
 
-Files added:
+Files:
 - `main.py` — small script
-- `requirements.txt` — empty
-- `.gitignore`

@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
+import argparse
+import json
 import random
+import sys
 
 MESSAGES = [
     "Keep going — small steps win races.",
@@ -42,10 +45,12 @@ MESSAGES = [
     "The most expensive part of a project is the part you built too soon.",
 ]
 
+
 def get_messages(count=1, seed=None):
     if seed is not None:
         random.seed(seed)
     return [random.choice(MESSAGES) for _ in range(count)]
+
 
 def build_parser():
     p = argparse.ArgumentParser(
@@ -57,6 +62,7 @@ def build_parser():
     p.add_argument("--json", action="store_true", help="output messages as a JSON array")
     p.add_argument("--list", action="store_true", help="print all available messages and exit")
     return p
+
 
 def main(argv=None):
     argv = argv if argv is not None else sys.argv[1:]
@@ -79,5 +85,6 @@ def main(argv=None):
 
     return 0
 
-if __name__ == '__main__':
-    main()
+
+if __name__ == "__main__":
+    raise SystemExit(main())

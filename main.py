@@ -42,8 +42,26 @@ MESSAGES = [
     "The most expensive part of a project is the part you built too soon.",
 ]
 
-def main():
-    print(random.choice(MESSAGES))
+def main(argv=None):
+    argv = argv if argv is not None else sys.argv[1:]
+    parser = build_parser()
+    args = parser.parse_args(argv)
+
+    if args.list:
+        for m in MESSAGES:
+            print(m)
+        return 0
+
+    msgs = get_messages(count=max(1, args.count), seed=args.seed)
+
+    if args.json:
+        json.dump(msgs, sys.stdout, ensure_ascii=False)
+        sys.stdout.write("\n")
+    else:
+        for m in msgs:
+            print(m)
+
+    return 0
 
 if __name__ == '__main__':
     main()

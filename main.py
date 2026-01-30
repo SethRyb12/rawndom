@@ -61,6 +61,8 @@ def build_parser():
     p.add_argument("-s", "--seed", type=int, default=None, help="optional RNG seed for reproducible output")
     p.add_argument("--json", action="store_true", help="output messages as a JSON array")
     p.add_argument("--list", action="store_true", help="print all available messages and exit")
+    p.add_argument("--unique", action="store_true", help="choose unique messages (no repeats)")
+    p.add_argument("-v", "--verbose", action="store_true", help="enable verbose logging to stderr")
     return p
 
 

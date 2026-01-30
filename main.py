@@ -3,6 +3,7 @@ import argparse
 import json
 import random
 import sys
+import logging
 
 MESSAGES = [
     "Keep going — small steps win races.",
@@ -47,9 +48,8 @@ MESSAGES = [
 
 
 def get_messages(count=1, seed=None):
-    if seed is not None:
-        random.seed(seed)
-    return [random.choice(MESSAGES) for _ in range(count)]
+    rng = random.Random(seed)
+    return [rng.choice(MESSAGES) for _ in range(count)]
 
 
 def build_parser():

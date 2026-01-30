@@ -71,6 +71,10 @@ def main(argv=None):
     parser = build_parser()
     args = parser.parse_args(argv)
 
+        # Configure logging
+    log_level = logging.DEBUG if args.verbose else logging.WARNING
+    logging.basicConfig(level=log_level, format="%(levelname)s: %(message)s")
+
     if args.list:
         for m in MESSAGES:
             print(m)

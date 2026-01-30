@@ -99,14 +99,19 @@ def main(argv=None):
         else:
             msgs = [rng.choice(MESSAGES) for _ in range(args.count)]
 
-    if args.json:
-        json.dump(msgs, sys.stdout, ensure_ascii=False)
-        sys.stdout.write("\n")
-    else:
-        for m in msgs:
-            print(m)
+        if args.json:
+            json.dump(msgs, sys.stdout, ensure_ascii=False)
+            sys.stdout.write("\n")
+        else:
+            for m in msgs:
+                print(m)
 
-    return 0
+        return 0
+    except SystemExit:
+        raise
+    except Exception:
+        logging.exception("Unexpected error while running")
+        return 1
 
 
 if __name__ == "__main__":

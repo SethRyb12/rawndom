@@ -80,7 +80,24 @@ def main(argv=None):
             print(m)
         return 0
 
-    msgs = get_messages(count=max(1, args.count), seed=args.seed)
+    # Validate count
+    try:
+        if args.count < 1:
+            parser.error("--count must be >= 1")
+        MAX_COUNT = 1000
+        if args.count > MAX_COUNT:
+            parser.error(f"--count must be <= {MAX_COUNT}")
+
+        # If unique selection requested, ensure we don't ask for more than available
+        if args.unique and args.count > len(MESSAGES):
+            parser.error(f"--unique requested but --count is greater than available messages ({len(MESSAGES)})")
+
+        # Use a local RNG so we don't affect global state
+        rng = random.Random(args.seed)
+        if args.unique:
+            msgs = rng.sample(MESSAGES, args.count)
+        else:
+            msgs = [rng.choice(MESSAGES) for _ in range(args.count)]
 
     if args.json:
         json.dump(msgs, sys.stdout, ensure_ascii=False)

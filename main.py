@@ -100,6 +100,10 @@ def main(argv=None):
             print(m)
         return 0
 
+    if args.version:
+        print(__version__)
+        return 0
+
     # Validate count
     try:
         if args.count < 1:

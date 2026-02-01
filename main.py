@@ -128,12 +128,21 @@ def main(argv=None):
         else:
             msgs = [rng.choice(messages_source) for _ in range(args.count)]
 
-        if args.json:
-            json.dump(msgs, sys.stdout, ensure_ascii=False)
-            sys.stdout.write("\n")
-        else:
-            for m in msgs:
-                print(m)
+  def output_messages(messages, out_path=None, fmt="text"):
+            if fmt == "json":
+                if out_path:
+                    Path(out_path).write_text(json.dumps(messages, ensure_ascii=False, indent=None) + "\n", encoding="utf-8")
+                else:
+                    json.dump(messages, sys.stdout, ensure_ascii=False)
+                    sys.stdout.write("\n")
+            else:
+                if out_path:
+                    Path(out_path).write_text("\n".join(messages) + "\n", encoding="utf-8")
+                else:
+                    for m in messages:
+                        print(m)
+
+        output_messages(msgs, out_path=args.output, fmt=("json" if args.json else args.format))
 
         return 0
     except SystemExit:

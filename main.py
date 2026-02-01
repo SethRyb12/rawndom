@@ -4,6 +4,7 @@ import json
 import random
 import sys
 import logging
+from pathlib import Path
 
 MESSAGES = [
     "Keep going — small steps win races.",
@@ -50,6 +51,21 @@ MESSAGES = [
 def get_messages(count=1, seed=None):
     rng = random.Random(seed)
     return [rng.choice(MESSAGES) for _ in range(count)]
+
+def load_messages_from_file(path):
+    p = Path(path)
+    if not p.exists():
+        raise FileNotFoundError(path)
+    if p.suffix.lower() == ".json":
+        data = json.loads(p.read_text(encoding="utf-8"))
+        if not isinstance(data, list):
+            raise ValueError("JSON message file must contain a list of strings")
+        return [str(x) for x in data]
+    else:
+        # Plain text file: one message per line
+        lines = [line.rstrip("\n\r") for line in p.read_text(encoding="utf-8").splitlines()]
+        return [l for l in (x.strip() for x in lines) if l]
+
 
 
 def build_parser():

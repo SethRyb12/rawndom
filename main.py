@@ -78,6 +78,10 @@ def build_parser():
     p.add_argument("--json", action="store_true", help="output messages as a JSON array")
     p.add_argument("--list", action="store_true", help="print all available messages and exit")
     p.add_argument("--unique", action="store_true", help="choose unique messages (no repeats)")
+    p.add_argument("-o", "--output", metavar="FILE", help="write output to FILE instead of stdout")
+    p.add_argument("--from-file", metavar="PATH", help="load messages from PATH (json or text lines)")
+    p.add_argument("--format", choices=["text", "json"], default="text", help="output format when writing to FILE or stdout")
+    p.add_argument("--version", action="store_true", help="print version and exit")
     p.add_argument("-v", "--verbose", action="store_true", help="enable verbose logging to stderr")
     return p
 

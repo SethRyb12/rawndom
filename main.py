@@ -116,12 +116,17 @@ def main(argv=None):
         if args.unique and args.count > len(MESSAGES):
             parser.error(f"--unique requested but --count is greater than available messages ({len(MESSAGES)})")
 
+        # Load messages from file if requested
+        messages_source = MESSAGES
+        if args.from_file:
+            messages_source = load_messages_from_file(args.from_file)
+
         # Use a local RNG so we don't affect global state
         rng = random.Random(args.seed)
         if args.unique:
-            msgs = rng.sample(MESSAGES, args.count)
+            msgs = rng.sample(messages_source, args.count)
         else:
-            msgs = [rng.choice(MESSAGES) for _ in range(args.count)]
+            msgs = [rng.choice(messages_source) for _ in range(args.count)]
 
         if args.json:
             json.dump(msgs, sys.stdout, ensure_ascii=False)

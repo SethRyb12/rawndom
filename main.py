@@ -5,6 +5,7 @@ import random
 import sys
 import logging
 from pathlib import Path
+from typing import List, Optional, Iterable
 
 MESSAGES = [
     "Keep going — small steps win races.",
@@ -48,11 +49,14 @@ MESSAGES = [
 ]
 
 
-def get_messages(count=1, seed=None):
+__version__ = "0.1.0"
+
+
+def get_messages(count: int = 1, seed: Optional[int] = None) -> List[str]:
     rng = random.Random(seed)
     return [rng.choice(MESSAGES) for _ in range(count)]
 
-def load_messages_from_file(path):
+def load_messages_from_file(path: str) -> List[str]:
     p = Path(path)
     if not p.exists():
         raise FileNotFoundError(path)
@@ -66,7 +70,26 @@ def load_messages_from_file(path):
         lines = [line.rstrip("\n\r") for line in p.read_text(encoding="utf-8").splitlines()]
         return [l for l in (x.strip() for x in lines) if l]
 
+def output_messages(messages: Iterable[str], out_path: Optional[str] = None, fmt: str = "text") -> None:
+    """Write or print messages.
 
+    messages: iterable of strings
+    out_path: optional file path to write output
+    fmt: 'text' or 'json'
+    """
+    msgs = list(messages)
+    if fmt == "json":
+        if out_path:
+            Path(out_path).write_text(json.dumps(msgs, ensure_ascii=False, indent=None) + "\n", encoding="utf-8")
+        else:
+            json.dump(msgs, sys.stdout, ensure_ascii=False)
+            sys.stdout.write("\n")
+    else:
+        if out_path:
+            Path(out_path).write_text("\n".join(msgs) + "\n", encoding="utf-8")
+        else:
+            for m in msgs:
+                print(m)
 
 def build_parser():
     p = argparse.ArgumentParser(
